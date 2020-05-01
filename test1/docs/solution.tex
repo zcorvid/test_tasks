@@ -1,0 +1,144 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[english,russian]{babel}
+\usepackage{amsfonts}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{amssymb,amsmath,amsthm}
+
+\setcounter{section}{-1}
+
+\begin{document}
+
+\begin{center}
+{\huge \bfseries Одометрия двухколёсной тележки}
+
+(тестовое задание)
+\end{center}
+
+Пусть $r(t) = (x(t), y(t))$ --- координаты середины оси тележки, а $\alpha(t)$ --- азимут. Также обозначим полуось тележки $c = \frac{1}{2}b$. Также для удобства введём обозначения $\Delta(t) = \theta_2(t) - \theta_1(t)$ и $s(t) = \frac{1}{2}(\theta_2(t) + \theta_1(t))$.
+
+{\bfseries Утверждение.} Верны следующие соотношения:
+
+$$
+\alpha(t) = \alpha(0) + \frac{R}{b} \left( \Delta(t) - \Delta(0) \right)
+$$
+
+$$
+x(t) = R\int\limits_{\tau = 0}^{\tau = t} \cos{\alpha}ds
+$$
+
+$$
+y(t) = R\int\limits_{\tau = 0}^{\tau = t} \sin{\alpha}ds
+$$
+
+{\bfseries Доказательство.}
+
+Пусть $u, v$ --- координаты точки касания колёс с плоскостью. Тогда $u, v$ могут быть выражены следующим образом:
+
+$$
+u = r + w, v = r - w, w = (- c \sin{\alpha}, c \cos{\alpha})
+$$
+
+Это выражение автоматически влечёт условие того, что расстояние между $u$ и $v$ равно константе --- ширине тележки.
+
+Добавим условие непроскальзывания. Оно означает, что вектор скорости точки соприкосновения колеса с плоскостью равен вектору скорости точки на колесе, это даёт следующие уравнения:
+
+$$
+\dot{u_x} = R\dot{\theta_1}\cos{\alpha}
+$$
+
+$$
+\dot{u_y} = R\dot{\theta_1}\sin{\alpha}
+$$
+
+$$
+\dot{v_x} = R\dot{\theta_2}\cos{\alpha}
+$$
+
+$$
+\dot{v_x} = R\dot{\theta_2}\sin{\alpha}
+$$
+
+\noindent Перепишем теперь эти уравнения в терминах $x, y, \alpha$:
+
+$$
+\dot{w} = (-c \dot{\alpha}\cos{\alpha}, -c \dot{\alpha}\sin{\alpha})
+$$
+
+$$
+(1): \dot{x} - c \dot{\alpha}\cos{\alpha} = R\dot{\theta_1}\cos{\alpha}
+$$
+
+$$
+(2): \dot{y} - c \dot{\alpha}\sin{\alpha} = R\dot{\theta_1}\sin{\alpha}
+$$
+
+$$
+(3): \dot{x} + c \dot{\alpha}\cos{\alpha} = R\dot{\theta_2}\cos{\alpha}
+$$
+
+$$
+(4): \dot{y} + c \dot{\alpha}\sin{\alpha} = R\dot{\theta_2}\sin{\alpha}
+$$
+
+Вычтем из уравнения (3) уравнение (1):
+
+$$
+(3) - (1): 2c\dot{\alpha}\cos{\alpha} = R(\dot{\theta_2} - \dot{\theta_1})\cos{\alpha}
+$$
+
+Вычтем из уравнения (4) уравнение (2):
+
+$$
+(4) - (2): 2c\dot{\alpha}\sin{\alpha} = R(\dot{\theta_2} - \dot{\theta_1})\sin{\alpha}
+$$
+
+Синус и косинус угла не могут одновременно равняться нулю, поэтому в одном из этих уравнений можно сократить, и получаем:
+
+$$
+2c\dot{\alpha} = R(\dot{\theta_2} - \dot{\theta_1})
+$$
+
+\noindent Или, что то же самое:
+
+$$
+b\dot{\alpha} = R(\dot{\theta_2} - \dot{\theta_1})
+$$
+
+Отсюда можно сделать вывод, что при начальном условии $\alpha(0) = \alpha_0$, имеем следующее решение:
+
+$$
+\alpha = \alpha_0 + \frac{R}{b} \left( \left(\theta_2(t) - \theta_1(t)\right) - \left(\theta_2(0) - \theta_1(0)\right) \right)
+$$
+
+Используя выше введённое обозначение, получаем требуемое соотношение для азимута:
+
+$$
+\alpha = \alpha_0 + \frac{R}{b} \left( \Delta(t) - \Delta(0) \right)
+$$
+
+Теперь вычислим $x(t), y(t)$. Для этого действуем аналогично, но сложим уравнения (1) с (3) и (2) с (4):
+
+$$
+(1) + (3): 2\dot{x} = R(\dot\theta_1 + \dot\theta_2)\cos{\alpha} = 2R\dot s \cos\alpha
+$$
+
+$$
+(2) + (4): 2\dot{y} = R(\dot\theta_1 + \dot\theta_2)\sin{\alpha} = 2R\dot s \sin\alpha
+$$
+
+\noindent Откуда получаем выражения для $x(t)$ и $y(t)$:
+
+$$
+x(t) = R\int\limits_0^t \dot s(\tau)\cos{\alpha(\tau)}d\tau = R\int\limits_{\tau = 0}^{\tau = t} \cos{\alpha}ds
+$$
+
+$$
+y(t) = R\int\limits_0^t \dot s(\tau)\sin{\alpha(\tau)}d\tau = R\int\limits_{\tau = 0}^{\tau = t} \sin{\alpha}ds
+$$
+
+\noindent Что и требовалось. \qed
+
+Мы будем использовать это утверждение для численного расчёта траектории движения платформы. Для этого мы сначала рассчитаем все промежуточные значения азимута $\alpha$, затем, используя полученный массив значений, рассчитаем значения координат центра $x, y$.
+
+\end{document} 
